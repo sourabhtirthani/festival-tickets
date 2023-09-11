@@ -56,7 +56,7 @@ contract FestivalTicket is ERC721, Ownable {
 
     function buyTicket(uint256 _ticketId) external {
         require(ownerOf(_ticketId) != msg.sender, "You already own this ticket");
-        
+        require(ticketsInfo[_ticketId].IsticketForSale,"This ticket is not for sale");
         uint256 sellingPrice = ticketsInfo[_ticketId].ticketPrices;
         uint256 fee = sellingPrice.mul(organizerFeePercentage).div(100);
         require(IERC20(currencyTokenAddress).allowance(msg.sender, address(this))>=sellingPrice, "Insufficient Allowance");
